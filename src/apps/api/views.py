@@ -33,7 +33,7 @@ time interval since it requires a loop of all station objects
 """
 class StationList(generics.ListAPIView):
     queryset = Station.objects.all()
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = StationSerializer
 
     def get(self, request, format=None):
@@ -65,7 +65,7 @@ timestamps of the data request
 class StationHeartbeat(generics.UpdateAPIView):
     queryset = Station.objects.all()
     serializer_class = HeartbeatSerializer
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         rID = request.data.get("station_id")
@@ -98,7 +98,8 @@ class StationHeartbeat(generics.UpdateAPIView):
 
 class StationStop(generics.UpdateAPIView):
     queryset = Station.objects.all()
-    serializer_class = StationStopSerializer 
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StationStopSerializer
 
     #Triggers on put request to /stop/
     def update(self, request, *args, **kwargs):
