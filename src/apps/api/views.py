@@ -40,19 +40,6 @@ class StationList(generics.ListAPIView):
         """
         Return a list of all stations
         """
-
-        #Update Station status of all stations before displaying
-        AliveCutoff = datetime.now(timezone.utc) - timedelta(hours=ONLINE_CUT_OFF_HOURS)
-        DeadCutoff = datetime.now(timezone.utc) - timedelta(hours=POSSIBLY_ONLINE_CUT_OFF_HOURS)
-        for instance in Station.objects.all():
-            if (instance.last_alive < DeadCutoff): 
-                instance.station_status = "Offline"
-            elif (instance.last_alive < AliveCutoff):
-                instance.station_status = "PossiblyOnline"
-            else:
-                instance.station_status = "Online"
-            instance.save()
-    
         return self.list(request)
 
 """
